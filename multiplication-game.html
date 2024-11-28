@@ -1,0 +1,215 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Multiplication Game</title>
+    <script type="module" src="https://cdn.jsdelivr.net/npm/@ionic/core/dist/ionic/ionic.esm.js"></script>
+    <script nomodule src="https://cdn.jsdelivr.net/npm/@ionic/core/dist/ionic/ionic.js"></script>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@ionic/core/css/ionic.bundle.css" />
+    <link rel="stylesheet" href="math-app.css">
+    <style>
+        .game-container {
+            text-align: center;
+            padding: 20px;
+        }
+
+        .scoreboard,
+        .question {
+            margin: 20px 0;
+        }
+
+        .timer {
+            font-size: 1.5rem;
+            color: red;
+        }
+
+        input[type="number"] {
+            font-size: 1.2rem;
+            padding: 10px;
+            margin: 10px 0;
+            width: 100px;
+            text-align: center;
+        }
+
+        .buttons ion-button {
+            margin: 5px;
+        }
+    </style>
+</head>
+
+<body>
+    <ion-app>
+        <ion-header>
+            <ion-toolbar>
+                <ion-buttons slot="start">
+                    <ion-button onclick="goBack()">Back</ion-button>
+                </ion-buttons>
+                <ion-title>Multiplication Game</ion-title>
+            </ion-toolbar>
+        </ion-header>
+        <ion-content class="game-container">
+            <div id="start-screen">
+                <h1>Ready to Test Your Math Skills?</h1>
+                <ion-button color="success" onclick="startGame()">Start Game</ion-button>
+            </div>
+
+            <div id="game-screen" style="display: none;">
+                <div class="scoreboard">
+                    <p>Score: <span id="score">0</span></p>
+                    <p>Lives: <span id="lives">3</span></p>
+                    <p>High Score: <span id="high-score">0</span></p>
+                </div>
+                <div class="question">
+                    <h2 id="question-text">What is 0 x 0?</h2>
+                    <input type="number" id="answer-input" placeholder="Your Answer" />
+                    <ion-button color="primary" onclick="submitAnswer()">Submit</ion-button>
+                </div>
+                <div class="timer">
+                    Time Left: <span id="timer">5</span>s
+                </div>
+            </div>
+            <div id="game-over-screen" style="display: none;">
+                <h1>Game Over!</h1>
+                <p>Your Score: <span id="final-score">0</span></p>
+                <p>High Score: <span id="final-high-score">0</span></p>
+                <ion-button color="success" onclick="startGame()">Play Again</ion-button>
+                <ion-button onclick="goBack()">Back to Main</ion-button>
+            </div>
+        </ion-content>
+    </ion-app>
+
+    <script>
+        let score = 0;
+        let lives = 3;
+        let highScore = localStorage.getItem('multiplicationHighScore') || 0; // Load the multiplication high score from localStorage
+        let multiplicationHighScore = localStorage.getItem('multiplicationHighScore') || 0; // Track the high score for multiplication
+        let timer;
+        let timeLeft = 5;
+
+        const startScreen = document.getElementById('start-screen');
+        const gameScreen = document.getElementById('game-screen');
+        const gameOverScreen = document.getElementById('game-over-screen');
+        const questionText = document.getElementById('question-text');
+        const scoreDisplay = document.getElementById('score');
+        const livesDisplay = document.getElementById('lives');
+        const highScoreDisplay = document.getElementById('high-score');
+        const finalScoreDisplay = document.getElementById('final-score');
+        const finalHighScoreDisplay = document.getElementById('final-high-score');
+        const timerDisplay = document.getElementById('timer');
+        const answerInput = document.getElementById('answer-input');
+
+        // Initialize High Score
+        highScoreDisplay.textContent = highScore;
+
+        // Go Back Function
+        function goBack() {
+            window.location.href = 'math-app.html';
+        }
+
+        // Start Game Function
+        function startGame() {
+            score = 0;
+            lives = 3;
+            timeLeft = 5;
+            updateScoreboard();
+
+            // Sync the high score with the stored value
+            highScore = localStorage.getItem('multiplicationHighScore') || 0;
+
+            // Display the correct high score
+            highScoreDisplay.textContent = highScore;
+
+            startScreen.style.display = 'none';
+            gameOverScreen.style.display = 'none';
+            gameScreen.style.display = 'block';
+            generateQuestion();
+            startTimer();
+        }
+
+        // Generate Random Question (for Multiplication)
+        function generateQuestion() {
+            const num1 = Math.floor(Math.random() * 10) + 1;  // Generate a random number between 1 and 10
+            const num2 = Math.floor(Math.random() * 10) + 1;  // Generate another random number between 1 and 10
+            questionText.textContent = `What is ${num1} x ${num2}?`;
+            questionText.dataset.answer = num1 * num2; // Store the correct answer in the dataset
+        }
+
+        // Update Scoreboard
+        function updateScoreboard() {
+            scoreDisplay.textContent = score;
+            livesDisplay.textContent = lives;
+            highScoreDisplay.textContent = highScore;
+        }
+
+        // Start Timer
+        function startTimer() {
+            clearInterval(timer);
+            timeLeft = 5; // Ensure the timer resets for the new question
+            timer = setInterval(() => {
+                timeLeft--;
+                timerDisplay.textContent = timeLeft;
+                if (timeLeft <= 0) {
+                    clearInterval(timer); // Stop current countdown
+                    loseLife();
+                    generateQuestion();
+                    startTimer(); // Restart timer for the next question
+                }
+            }, 1000);
+        }
+
+        // Submit Answer
+        function submitAnswer() {
+            const userAnswer = parseInt(answerInput.value, 10);
+            const correctAnswer = parseInt(questionText.dataset.answer, 10);
+            if (userAnswer === correctAnswer) {
+                score++;
+                updateMultiplicationHighScore();
+            } else {
+                loseLife();
+            }
+            answerInput.value = '';
+            generateQuestion();
+            startTimer(); // Restart the timer after an answer
+        }
+
+        // Lose Life
+        function loseLife() {
+            lives--;
+            updateScoreboard();
+            if (lives <= 0) {
+                endGame();
+            }
+        }
+
+        // Update Multiplication High Score
+        function updateMultiplicationHighScore() {
+            if (score > multiplicationHighScore) {
+                multiplicationHighScore = score;
+                localStorage.setItem('multiplicationHighScore', multiplicationHighScore); // Save the new high score for multiplication
+            }
+
+            // Update the global high score if needed
+            if (multiplicationHighScore > highScore) {
+                highScore = multiplicationHighScore; // Set the main high score to the highest score
+                localStorage.setItem('highScore', highScore); // Save the updated high score globally
+            }
+
+            updateScoreboard(); // Update the scoreboard to reflect the current high score
+        }
+
+        // End Game
+        function endGame() {
+            clearInterval(timer);
+            finalScoreDisplay.textContent = score;
+            finalHighScoreDisplay.textContent = multiplicationHighScore; // Show the multiplication high score at the end of the game
+            gameScreen.style.display = 'none';
+            gameOverScreen.style.display = 'block';
+        }
+
+    </script>
+
+</body>
+
+</html>

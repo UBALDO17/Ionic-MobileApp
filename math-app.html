@@ -1,0 +1,194 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Math Game</title>
+    <script type="module" src="https://cdn.jsdelivr.net/npm/@ionic/core/dist/ionic/ionic.esm.js"></script>
+    <script nomodule src="https://cdn.jsdelivr.net/npm/@ionic/core/dist/ionic/ionic.js"></script>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@ionic/core/css/ionic.bundle.css" />
+    <link rel="stylesheet" href="math-app.css">
+</head>
+
+<body>
+    <ion-app>
+
+        <ion-tabs>
+            <ion-tab tab="home">
+                <ion-nav id="home-nav"></ion-nav>
+                <div id="home-page">
+                    <ion-header>
+                        <ion-toolbar>
+                            <ion-title>Math Game</ion-title>
+                        </ion-toolbar>
+                    </ion-header>
+                    <ion-content>
+                        <ion-content class="ion-padding">
+                            <div class="welcome-container">
+                                <ion-text color="primary">
+                                    <h1 class="animate-title">Welcome to Math Game! 🎉</h1>
+                                </ion-text>
+                                <p class="animate-text">
+                                    Ready to test your math skills and conquer exciting puzzles? Dive into
+                                    challenges like addition, subtraction, multiplication, and division.
+                                    Beat high scores, and become the ultimate math champion! 🧮✨
+                                </p>
+
+                                <ion-button expand="block" color="success" onclick="alert('Game Started!')"
+                                    class="animate-button">🎮
+                                    Start Playing
+                                </ion-button>
+                            </div>
+                        </ion-content>
+                    </ion-content>
+                </div>
+            </ion-tab>
+            <ion-tab tab="games">
+                <ion-nav id="games-nav"></ion-nav>
+                <div id="games-page">
+                    <ion-header>
+                        <ion-toolbar>
+                            <ion-title>Games</ion-title>
+                        </ion-toolbar>
+                    </ion-header>
+                    <ion-content>
+                        <ion-grid class="ion-align-items-center ion-justify-content-center" style="height: 100%;">
+                            <ion-row>
+                                <ion-col size="12" class="ion-text-center">
+                                    <ion-text color="primary">
+                                        <h1>Select a Game to Play</h1>
+                                    </ion-text>
+                                </ion-col>
+                            </ion-row>
+
+                            <ion-row>
+                                <!-- First Row of Buttons -->
+                                <ion-col size="6" class="ion-text-center">
+                                    <ion-button expand="block" color="primary" onclick="startGame('addition')">
+                                        Addition
+                                    </ion-button>
+                                </ion-col>
+                                <ion-col size="6" class="ion-text-center">
+                                    <ion-button expand="block" color="secondary" onclick="startGame('subtraction')">
+                                        Subtraction
+                                    </ion-button>
+                                </ion-col>
+                            </ion-row>
+
+                            <ion-row>
+                                <!-- Second Row of Buttons -->
+                                <ion-col size="6" class="ion-text-center">
+                                    <ion-button expand="block" color="tertiary" onclick="startGame('multiplication')">
+                                        Multiplication
+                                    </ion-button>
+                                </ion-col>
+                                <ion-col size="6" class="ion-text-center">
+                                    <ion-button expand="block" color="success" onclick="startGame('division')">
+                                        Division
+                                    </ion-button>
+                                </ion-col>
+                            </ion-row>
+                        </ion-grid>
+                    </ion-content>
+                </div>
+            </ion-tab>
+            <ion-tab tab="profile">
+                <ion-nav id="profile-nav"></ion-nav>
+                <div id="profile-page">
+                    <ion-header>
+                        <ion-toolbar>
+                            <ion-title>Profile</ion-title>
+                        </ion-toolbar>
+                    </ion-header>
+                    <ion-content>
+                        <ion-content class="profile-container">
+                            <div class="profile-info">
+                                <!-- Profile Image -->
+                                <input type="file" id="profile-pic-upload" accept="image/*" style="display: none;"
+                                    onchange="updateProfilePic()">
+                                <img id="profile-pic" src="profile-pic.jpg" alt="Profile Picture" class="profile-image"
+                                    onclick="triggerFileUpload()">
+
+                                <!-- Username -->
+                                <h2 id="username">
+                                    <span contenteditable="true" id="editable-username" oninput="updateUsername()">User
+                                        Name</span>
+                                </h2>
+                            </div>
+
+                            <div class="high-scores">
+                                <h3>Highest Scores</h3>
+                                <p>Addition High Score: <span id="addition-high-score">0</span></p>
+                                <p>Subtraction High Score: <span id="subtraction-high-score">0</span></p>
+                                <p>Multiplication High Score: <span id="multiplication-high-score">0</span></p>
+                                <p>Division High Score: <span id="division-high-score">0</span></p>
+                            </div>
+                        </ion-content>
+                    </ion-content>
+                </div>
+            </ion-tab>
+            <ion-tab-bar slot="bottom">
+                <ion-tab-button tab="home">
+                    <ion-icon name="home-outline"></ion-icon>
+                    Home
+                </ion-tab-button>
+                <ion-tab-button tab="games">
+                    <ion-icon name="game-controller-outline"></ion-icon>
+                    Games
+                </ion-tab-button>
+                <ion-tab-button tab="profile">
+                    <ion-icon name="person-circle-outline"></ion-icon>
+                    Profile
+                </ion-tab-button>
+            </ion-tab-bar>
+        </ion-tabs>
+
+    </ion-app>
+</body>
+
+<script>
+    // Initialize navigation for tabs
+    document.querySelector('#home-nav').root = document.querySelector('#home-page');
+    document.querySelector('#games-nav').root = document.querySelector('#games-page');
+    document.querySelector('#profile-nav').root = document.querySelector('#profile-page');
+
+    // Function to handle game selection
+    function startGame(type) {
+        if (type === 'addition') {
+            window.location.href = 'addition-game.html';
+        } else if (type === 'subtraction') {
+            window.location.href = 'subtraction-game.html';
+        } else if (type === 'multiplication') {
+            window.location.href = 'multiplication-game.html';
+        } else if (type === 'division') {
+            window.location.href = 'division-game.html';
+        } else {
+            console.error('Invalid game type');
+        }
+    }
+
+    window.onload = function () {
+        // Get the profile name from localStorage or set a default value
+        const username = localStorage.getItem('username') || 'User Name';
+        document.getElementById('username').textContent = username;
+
+        // Load the high scores for each arithmetic operation from localStorage
+        const additionHighScore = localStorage.getItem('additionHighScore') || 0;
+        const subtractionHighScore = localStorage.getItem('subtractionHighScore') || 0;
+        const multiplicationHighScore = localStorage.getItem('multiplicationHighScore') || 0;
+        const divisionHighScore = localStorage.getItem('divisionHighScore') || 0;
+
+        // Update the high score display
+        document.getElementById('addition-high-score').textContent = additionHighScore;
+        document.getElementById('subtraction-high-score').textContent = subtractionHighScore;
+        document.getElementById('multiplication-high-score').textContent = multiplicationHighScore;
+        document.getElementById('division-high-score').textContent = divisionHighScore;
+    };
+
+
+    //Profile
+
+</script>
+
+</html>
