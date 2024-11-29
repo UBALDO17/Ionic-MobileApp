@@ -209,8 +209,9 @@ ion-tab-button {
 /* Profile */
 
 .profile-info {
+    margin-top: 25px;
     text-align: center;
-    margin-bottom: 30px;
+    margin-bottom: 10px;
 }
 
 .profile-image {
@@ -221,11 +222,93 @@ ion-tab-button {
     object-fit: cover;
 }
 
-#editable-username {
+/* Overall page styling */
+body {
+    font-family: Arial, sans-serif;
+    background-color: #f4f4f4;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    color: #333;
+}
+
+/* Overall page styling */
+body {
+    font-family: Arial, sans-serif;
+    background-color: #f4f4f4;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    color: #333;
+}
+
+/* Username container */
+#username {
+    font-size: 2rem;
+    font-weight: bold;
+    color: #333;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-bottom: 20px;
+}
+
+/* Container for input */
+.username-container {
+    display: flex;
+    align-items: center;
+    border: 1px solid #ccc;
+    border-radius: 10px;
+    background-color: #fff;
+    padding: 3px 11px;
+    cursor: pointer;
+}
+
+/* Editable input field */
+.username-input {
     border: none;
-    background: transparent;
-    font-size: 1.5rem;
+    background-color: transparent;
+    font-size: 1.4rem;
+    font-weight: bold;
+    color: #ffffff;
+    outline: none;
+    padding: 3px;
+    width: 180px;
+    /* Set width to allow space for up to 10 characters */
     text-align: center;
+    max-width: 180px;
+    /* Allow up to 10 characters */
+    overflow-x: auto;
+    /* Allow horizontal scrolling if text exceeds input width */
+    cursor: text;
+}
+
+/* Styling for when the input is focused */
+.username-input:focus {
+    border-bottom: 2px solid #FF6347;
+    background-color: #be1c1c;
+}
+
+/* Minimalist approach: No borders, just text and icon */
+.username-container {
+    border: none;
+    background-color: transparent;
+    padding: 0;
+    box-shadow: none;
+}
+
+/* For responsiveness */
+@media (max-width: 600px) {
+    .username-input {
+        width: 170px;
+        /* Adjust width for smaller screens */
+    }
 }
 
 .high-scores-container {

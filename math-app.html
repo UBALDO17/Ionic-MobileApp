@@ -113,11 +113,16 @@
                                 <img id="profile-pic" src="profile-pic.jpg" alt="Profile Picture" class="profile-image"
                                     onclick="triggerFileUpload()">
 
-                                <!-- Username -->
+                                <!-- Username Section -->
                                 <h2 id="username">
-                                    <span contenteditable="true" id="editable-username" oninput="updateUsername()">User
-                                        Name</span>
+                                    <div class="username-container" onclick="toggleEditMode()">
+                                        <input type="text" id="editable-username" value="User Name"
+                                            oninput="updateUsername()" aria-label="Edit Username" class="username-input"
+                                            maxlength="10" readonly />
+                                    </div>
                                 </h2>
+
+
                             </div>
 
                             <div class="high-scores-container">
@@ -190,9 +195,6 @@
     }
 
     window.onload = function () {
-        // Get the profile name from localStorage or set a default value
-        const username = localStorage.getItem('username') || 'User Name';
-        document.getElementById('username').textContent = username;
 
         // Load the high scores for each arithmetic operation from localStorage
         const additionHighScore = localStorage.getItem('additionHighScore') || 0;
@@ -206,6 +208,34 @@
         document.getElementById('multiplication-high-score').textContent = multiplicationHighScore;
         document.getElementById('division-high-score').textContent = divisionHighScore;
     };
+
+    // Get username from localStorage or use a default value
+    const storedUsername = localStorage.getItem('username') || 'User Name';
+    document.getElementById('editable-username').value = storedUsername;
+
+    // Function to update username in localStorage
+    function updateUsername() {
+        const newUsername = document.getElementById('editable-username').value;
+        localStorage.setItem('username', newUsername);
+    }
+
+    // Function to toggle between editable and non-editable mode when the username is clicked
+    function toggleEditMode() {
+        const inputField = document.getElementById('editable-username');
+        const currentValue = inputField.value;
+
+        // If the input is not in edit mode (i.e., it’s a static text), make it editable
+        if (inputField.readOnly) {
+            inputField.readOnly = false;
+            inputField.focus();
+        } else {
+            // If already in edit mode, save the value and set it to readonly
+            inputField.readOnly = true;
+            localStorage.setItem('username', currentValue);
+        }
+    }
+
+
 
 </script>
 
