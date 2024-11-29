@@ -9,75 +9,70 @@
     <script nomodule src="https://cdn.jsdelivr.net/npm/@ionic/core/dist/ionic/ionic.js"></script>
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@ionic/core/css/ionic.bundle.css" />
     <link rel="stylesheet" href="math-app.css">
-    <style>
-        .game-container {
-            text-align: center;
-            padding: 20px;
-        }
-
-        .scoreboard,
-        .question {
-            margin: 20px 0;
-        }
-
-        .timer {
-            font-size: 1.5rem;
-            color: red;
-        }
-
-        input[type="number"] {
-            font-size: 1.2rem;
-            padding: 10px;
-            margin: 10px 0;
-            width: 100px;
-            text-align: center;
-        }
-
-        .buttons ion-button {
-            margin: 5px;
-        }
-    </style>
+    <link rel="stylesheet" href="game.css">
 </head>
 
 <body>
     <ion-app>
         <ion-header>
-            <ion-toolbar>
+            <ion-toolbar class="custom-toolbar">
                 <ion-buttons slot="start">
-                    <ion-button onclick="goBack()">Back</ion-button>
+                    <ion-button class="back-button" onclick="goBack()">Back</ion-button>
                 </ion-buttons>
                 <ion-title>Multiplication Game</ion-title>
             </ion-toolbar>
         </ion-header>
         <ion-content class="game-container">
-            <div id="start-screen">
-                <h1>Ready to Test Your Math Skills?</h1>
-                <ion-button color="success" onclick="startGame()">Start Game</ion-button>
+            <div id="start-screen" class="screen active">
+                <h1 class="title animated-title">Ready to Test Your Math Skills?</h1>
+                <p class="subtitle">Challenge yourself and see how high you can score!</p>
+                <ion-button class="glow-button start-btn" onclick="startGame()">Start Game</ion-button>
             </div>
 
-            <div id="game-screen" style="display: none;">
+            <div id="game-screen" class="screen">
                 <div class="scoreboard">
-                    <p>Score: <span id="score">0</span></p>
-                    <p>Lives: <span id="lives">3</span></p>
-                    <p>High Score: <span id="high-score">0</span></p>
+                    <p>🧮 Score: <span id="score">0</span></p>
+                    <br>
+                    <p>❤️ Lives: <span id="lives">3</span></p>
+                    <br>
+                    <p>🏆 High Score: <span id="high-score">0</span></p>
                 </div>
+
                 <div class="question">
                     <h2 id="question-text">What is 0 x 0?</h2>
-                    <input type="number" id="answer-input" placeholder="Your Answer" />
-                    <ion-button color="primary" onclick="submitAnswer()">Submit</ion-button>
+                    <input type="number" id="answer-input" placeholder="Enter Your Answer" />
+                    <ion-button class="glow-button" onclick="submitAnswer()">Submit</ion-button>
                 </div>
                 <div class="timer">
-                    Time Left: <span id="timer">5</span>s
+                    <p>⏳ Time Left: <span id="timer">5</span>s</p>
                 </div>
             </div>
-            <div id="game-over-screen" style="display: none;">
-                <h1>Game Over!</h1>
-                <p>Your Score: <span id="final-score">0</span></p>
-                <p>High Score: <span id="final-high-score">0</span></p>
-                <ion-button color="success" onclick="startGame()">Play Again</ion-button>
-                <ion-button onclick="goBack()">Back to Main</ion-button>
+
+            <div id="game-over-screen" class="screen">
+                <h1 class="title animated-title">Game Over!</h1>
+                <p class="final-score-text">Your Score: <span id="final-score">0</span></p>
+                <p class="final-high-score-text">High Score: <span id="final-high-score">0</span></p>
+                <ion-button class="glow-button play-again-btn" onclick="startGame()">Play Again</ion-button>
+                <br />
+                <br />
+                <ion-button class="back-button2" onclick="goBack()">Back to Main</ion-button>
             </div>
         </ion-content>
+        <ion-tab-bar slot="bottom">
+            <ion-tab-button tab="home">
+                <ion-icon name="home-outline"></ion-icon>
+                Home
+            </ion-tab-button>
+            <ion-tab-button tab="games">
+                <ion-icon name="game-controller-outline"></ion-icon>
+                Games
+            </ion-tab-button>
+            <ion-tab-button tab="profile">
+                <ion-icon name="person-circle-outline"></ion-icon>
+                Profile
+            </ion-tab-button>
+        </ion-tab-bar>
+
     </ion-app>
 
     <script>

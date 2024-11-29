@@ -19,7 +19,7 @@
                 <ion-nav id="home-nav"></ion-nav>
                 <div id="home-page">
                     <ion-header>
-                        <ion-toolbar>
+                        <ion-toolbar class="custom-toolbar">
                             <ion-title>Math Game</ion-title>
                         </ion-toolbar>
                     </ion-header>
@@ -48,48 +48,51 @@
                 <ion-nav id="games-nav"></ion-nav>
                 <div id="games-page">
                     <ion-header>
-                        <ion-toolbar>
+                        <ion-toolbar class="custom-toolbar">
                             <ion-title>Games</ion-title>
                         </ion-toolbar>
                     </ion-header>
                     <ion-content>
-                        <ion-grid class="ion-align-items-center ion-justify-content-center" style="height: 100%;">
+                        <ion-grid class="ion-align-items-center ion-justify-content-center game-container">
                             <ion-row>
                                 <ion-col size="12" class="ion-text-center">
-                                    <ion-text color="primary">
-                                        <h1>Select a Game to Play</h1>
+                                    <ion-text color="light">
+                                        <h1 class="game-title">Select a Game to Play 🎮</h1>
                                     </ion-text>
                                 </ion-col>
                             </ion-row>
 
-                            <ion-row>
+                            <ion-row class="button-row">
                                 <!-- First Row of Buttons -->
                                 <ion-col size="6" class="ion-text-center">
-                                    <ion-button expand="block" color="primary" onclick="startGame('addition')">
-                                        Addition
+                                    <ion-button expand="block" class="game-btn addition-btn"
+                                        onclick="startGame('addition')"><span>Addition</span>
                                     </ion-button>
                                 </ion-col>
                                 <ion-col size="6" class="ion-text-center">
-                                    <ion-button expand="block" color="secondary" onclick="startGame('subtraction')">
-                                        Subtraction
+                                    <ion-button expand="block" class="game-btn subtraction-btn"
+                                        onclick="startGame('subtraction')"><span>Subtraction</span>
                                     </ion-button>
                                 </ion-col>
                             </ion-row>
 
-                            <ion-row>
+                            <ion-row class="button-row">
                                 <!-- Second Row of Buttons -->
                                 <ion-col size="6" class="ion-text-center">
-                                    <ion-button expand="block" color="tertiary" onclick="startGame('multiplication')">
-                                        Multiplication
+                                    <ion-button expand="block" class="game-btn multiplication-btn"
+                                        onclick="startGame('multiplication')"> <span>Multiplication</span>
                                     </ion-button>
                                 </ion-col>
                                 <ion-col size="6" class="ion-text-center">
-                                    <ion-button expand="block" color="success" onclick="startGame('division')">
-                                        Division
+                                    <ion-button expand="block" class="game-btn division-btn"
+                                        onclick="startGame('division')"><span>Division</span>
                                     </ion-button>
                                 </ion-col>
                             </ion-row>
+
                         </ion-grid>
+
+
                     </ion-content>
                 </div>
             </ion-tab>
@@ -97,7 +100,7 @@
                 <ion-nav id="profile-nav"></ion-nav>
                 <div id="profile-page">
                     <ion-header>
-                        <ion-toolbar>
+                        <ion-toolbar class="custom-toolbar">
                             <ion-title>Profile</ion-title>
                         </ion-toolbar>
                     </ion-header>
@@ -128,6 +131,7 @@
                     </ion-content>
                 </div>
             </ion-tab>
+
             <ion-tab-bar slot="bottom">
                 <ion-tab-button tab="home">
                     <ion-icon name="home-outline"></ion-icon>
@@ -185,9 +189,6 @@
         document.getElementById('multiplication-high-score').textContent = multiplicationHighScore;
         document.getElementById('division-high-score').textContent = divisionHighScore;
     };
-
-
-    //Profile
 
 </script>
 
