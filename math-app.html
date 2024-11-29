@@ -235,6 +235,43 @@
         }
     }
 
+    // Function to trigger file upload when the profile picture is clicked
+    function triggerFileUpload() {
+        document.getElementById('profile-pic-upload').click();
+    }
+
+    // Function to update profile picture
+    function updateProfilePic() {
+        const fileInput = document.getElementById('profile-pic-upload');
+        const file = fileInput.files[0];
+
+        // If the user selects a file
+        if (file) {
+            const reader = new FileReader();
+
+            reader.onload = function (e) {
+                document.getElementById('profile-pic').src = e.target.result;
+            };
+
+            reader.readAsDataURL(file);
+        }
+    }
+
+    // Function to toggle between editable and non-editable mode when the username is clicked
+    function toggleEditMode() {
+        const inputField = document.getElementById('editable-username');
+        const currentValue = inputField.value;
+
+        // If the input is not in edit mode (i.e., it’s a static text), make it editable
+        if (inputField.readOnly) {
+            inputField.readOnly = false;
+            inputField.focus();
+        } else {
+            // If already in edit mode, save the value and set it to readonly
+            inputField.readOnly = true;
+            localStorage.setItem('username', currentValue);
+        }
+    }
 
 
 </script>
